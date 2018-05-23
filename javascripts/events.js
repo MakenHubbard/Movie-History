@@ -1,3 +1,5 @@
+const tmdb = require('./tmdb');
+
 const myLinks = () => {
   $(document).click((e) => {
     if (e.target.id === 'login') {
@@ -16,6 +18,20 @@ const myLinks = () => {
   });
 };
 
+const pressEnter = () => {
+  $(document).keypress((e) => {
+    if (e.key === 'Enter') {
+      const searchWords = $('#searchBar').val().replace('', '%20');
+      tmdb.showResults(searchWords);
+    }
+  });
+};
+
+const initializer = () => {
+  myLinks();
+  pressEnter();
+};
+
 module.exports = {
-  myLinks,
+  initializer,
 };
