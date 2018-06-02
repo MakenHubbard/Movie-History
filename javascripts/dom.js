@@ -11,7 +11,7 @@ const domString = (movieArray, config, whereToPrint, myCollectionMode = false) =
     };
     strang += `<img data-poster="${movie.poster_path}" src="${config.base_url}/w342/${movie.poster_path}" alt="Movie Poster">`;
     strang += `<div class="caption">`;
-    strang += `<h3 class="movie-title">${movie.original_title}</h3>`;
+    strang += `<h3 class="movie-title">${movie.original_title ? movie.original_title : movie.title}</h3>`;
     strang += `<p class="movie-overview">${movie.overview}</p>`;
     if (!myCollectionMode) {
       strang += `<p><a class="btn btn-default addMovieToWishList" role="button">Wishlist</a></p>`;

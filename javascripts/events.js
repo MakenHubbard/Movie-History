@@ -37,7 +37,7 @@ const saveMovieToWishListEvent = () => {
     const movieToAddCard = $(e.target).closest('.movie');
     const movieToAdd = {
       title: $(movieToAddCard).find('.movie-title').text(),
-      overview: $(movieToAddCard).find('.movie-overview'),
+      overview: $(movieToAddCard).find('.movie-overview').text(),
       poster_path: $(movieToAddCard).find('img').data('poster'),
       rating: 0,
       isWatched: false,
@@ -77,11 +77,33 @@ const deleteMovieFromFirebase = () => {
   });
 };
 
+const updateMovieEvent = () => {
+  $(document).on('click', '.updateMovieToWatched', (e) => {
+    const movieToUpdateId = $(e.target).closest('.movie').data('firebaseId');
+    const movieToUpdateCard = $(e.target).closest('.movie');
+    const updatedMovie = {
+      title: movieToUpdateCard.find('.movie-title').text(),
+      overview: movieToUpdateCard.find('.movie-overview').text(),
+      poster_path: movieToUpdateCard.find('img').data('poster'),
+      rating: 0,
+      isWatched: true,
+    };
+    firebaseApi.updateMovieToWatchedInDb(updatedMovie, movieToUpdateId)
+      .then(() => {
+        getAllMoviesEvent();
+      })
+      .catch((error) => {
+        console.error('error in update movie', error);
+      });
+  });
+};
+
 const initializer = () => {
   myLinks();
   pressEnter();
   saveMovieToWishListEvent();
   deleteMovieFromFirebase();
+  updateMovieEvent();
 };
 
 module.exports = {
