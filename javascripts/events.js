@@ -1,5 +1,6 @@
 /* eslint camelcase: 0 */
 
+const dom = require('./dom');
 const tmdb = require('./tmdb');
 const firebaseApi = require('./firebaseApi');
 
@@ -55,7 +56,7 @@ const getAllMoviesEvent = () => {
   firebaseApi.getAllMovies()
     .then((moviesArray) => {
       moviesArray.forEach((movie) => {
-        $('#savedMovies').append(movie.title);
+        dom.domString(moviesArray, tmdb.getImageConfig(), 'savedMovies', true);
       });
     })
     .catch((error) => {
@@ -63,10 +64,24 @@ const getAllMoviesEvent = () => {
     });
 };
 
+const deleteMovieFromFirebase = () => {
+  $(document).on('click', '.deleteMovieFromCollectionEvent', (e) => {
+    const movieToDeleteId = $(e.target).closest('.movie').data('firebaseId');
+    firebaseApi.deleteMovieFromDb(movieToDeleteId)
+      .then(() => {
+        getAllMoviesEvent();
+      })
+      .catch((error) => {
+        console.error('soemthing went wrong in deleteMovies', error);
+      });
+  });
+};
+
 const initializer = () => {
   myLinks();
   pressEnter();
   saveMovieToWishListEvent();
+  deleteMovieFromFirebase();
 };
 
 module.exports = {
