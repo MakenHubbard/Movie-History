@@ -149,6 +149,15 @@ const authEvents = () => {
       });
   });
 
+  $('#register-btn').click(() => {
+    const email = $('#registerEmail').val();
+    const pass = $('#registerPassword').val();
+    firebase.auth().createUserWithEmailAndPassword(email, pass).catch((error) => {
+      const errorMessage = error.message;
+      console.error(errorMessage);
+    });
+  });
+
   $('#register-link').click(() => {
     $('#login-form').addClass('hide');
     $('#registration-form').removeClass('hide');
@@ -161,8 +170,8 @@ const authEvents = () => {
 
   $('#logout').click(() => {
     firebase.auth().signOut()
-      .then((result) => {
-        console.error(result);
+      .then(() => {
+
       })
       .catch((error) => {
         // An error happened.
