@@ -8,7 +8,7 @@ const checkLoginStatus = () => {
       $('#myMovies').removeClass('hide');
       $('#search').addClass('hide');
       $('#authScreen').addClass('hide');
-      $('#navSearch, #logout').removeClass('hide');
+      $('#searchMovies, #logout, #favMovies').removeClass('hide');
       $('#authenticate').addClass('hide');
       getAllMoviesEvent();
     } else {
