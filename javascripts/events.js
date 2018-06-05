@@ -137,6 +137,25 @@ const filterEvents = () => {
   });
 };
 
+const authEvents = () => {
+  $('#signIn-btn').click((e) => {
+    e.preventDefault();
+    const email = $('#inputEmail').val();
+    const pass = $('#inputPassword').val();
+    firebase.auth().signInWithEmailAndPassword(email, pass)
+      .then((user) => {
+        $('#myMovies').removeClass('hide');
+        $('#search').addClass('hide');
+        $('#authScreen').addClass('hide');
+        getAllMoviesEvent();
+      })
+      .catch((error) => {
+        const errorMessage = error.message;
+        console.error(errorMessage);
+      });
+  });
+};
+
 const initializer = () => {
   myLinks();
   pressEnter();
@@ -144,6 +163,7 @@ const initializer = () => {
   deleteMovieFromFirebase();
   updateMovieEvent();
   filterEvents();
+  authEvents();
 };
 
 module.exports = {
