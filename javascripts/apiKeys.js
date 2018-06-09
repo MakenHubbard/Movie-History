@@ -4,7 +4,7 @@ const { checkLoginStatus, } = require('./auth');
 
 const apiKeys = () => {
   return new Promise((resolve, reject) => {
-    $.ajax('./db/apikeys.json')
+    $.ajax('./db/apiKeys.json')
       .done((data) => {
         resolve(data.apiKeys);
       })
